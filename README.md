@@ -11,50 +11,77 @@ Kullanıcılar bu panel üzerinden:
 - belge yükleyebilir
 - teknik süreç adımlarını yapay zeka destekli açıklamalarla anlayabilir
 
----
+## Proje Amacı
 
-# Proje Amacı
-
-Bu çalışmanın amacı, kullanıcıların sürekli çağrı merkezine ulaşmadan kendi hasar süreçlerini kolayca takip edebilecekleri modern bir self-service deneyimi oluşturmaktır.
-
-Dashboard kullanıcının temel olarak şu sorularına cevap verir:
+Kullanıcıların sürekli çağrı merkezine ulaşmadan kendi hasar süreçlerini kolayca takip edebilecekleri modern bir self-service deneyimi oluşturmaktır. Dashboard şu sorulara cevap verir:
 
 - Dosya numaram nedir?
 - Süreç şu anda hangi aşamada?
 - Daha ne kadar sürecek?
 - Benim şu anda yapmam gereken bir işlem var mı?
 
----
+## Özellikler
 
-# Özellikler
-
-- Responsive tasarım
-- Mobile-first yaklaşım
-- Süreç özet kartları
-- Timeline tabanlı süreç takibi
-- Adım adım hasar durumu görüntüleme
+- Responsive, mobile-first tasarım
+- Süreç özet kartları ve ilerleme yüzdesi göstergesi
+- Timeline tabanlı, adım adım hasar durumu görüntüleme
 - Her süreç adımı için AI açıklama paneli
 - Simüle edilmiş AI belge analiz alanı
 - Aksiyon gerektiren adımların vurgulanması
-- İlerleme yüzdesi göstergesi
-- Ölçeklenebilir component mimarisi
+- Süreç adımı başlığına göre özel node component'i seçen genişletilebilir yapı
 
----
+## Kullanılan Teknolojiler
 
-# Kullanılan Teknolojiler
+| Alan | Teknoloji |
+| --- | --- |
+| Framework | [Next.js 16](https://nextjs.org/) (App Router) |
+| UI | [React 19](https://react.dev/) |
+| Dil | JavaScript |
+| Stil | [Tailwind CSS 4](https://tailwindcss.com/), `tw-animate-css` |
+| Bileşen kütüphanesi | [shadcn/ui](https://ui.shadcn.com/) (Radix UI tabanlı) |
+| Sunucu durumu | [TanStack React Query](https://tanstack.com/query) |
+| İstemci durumu | [Zustand](https://zustand-demo.pmnd.rs/) |
+| İkonlar | [Lucide React](https://lucide.dev/) |
+| Yardımcılar | `clsx`, `tailwind-merge`, `class-variance-authority` |
+| Kalite | ESLint (`eslint-config-next`) |
 
-- Next.js
-- React
-- JavaScript
-- Tailwind CSS
-- shadcn/ui
-- TanStack React Query
-- Zustand
-- Lucide React
+## Proje Yapısı
 
----
+```
+app/                      Next.js App Router (layout, page, global stiller)
+components/
+  ai/                     AI açıklama paneli ve belge yükleme kutusu
+  common/                 Ortak küçük bileşenler (InfoTile)
+  dashboard/              Sayfa bölümleri (hero, progress, quick overview, skeleton, error)
+  process/                Timeline, node bileşenleri, status badge, explain button
+    nodes/                Adıma özel node kartları
+  summary/                Özet kartları
+  ui/                     shadcn/ui bileşenleri
+features/claim/
+  api/                    Mock API çağrısı
+  constants/              Durum stilleri ve AI açıklama metinleri
+  hooks/                  React Query hook'ları
+  store/                  Zustand store
+  utils/                  Saf yardımcı fonksiyonlar (progress, action, label formatlama)
+lib/                      Genel yardımcılar (`cn`)
+mocks/                    Örnek hasar verisi
+providers/                React Query provider
+```
 
-# Kurulum
+## Kurulum
 
-Bağımlılıklar: npm install
-Projeyi çalıştırın:npm run dev
+```bash
+npm install
+npm run dev
+```
+
+Uygulama `http://localhost:3000` adresinde çalışır.
+
+## Komutlar
+
+| Komut | Açıklama |
+| --- | --- |
+| `npm run dev` | Geliştirme sunucusunu başlatır |
+| `npm run build` | Production build alır |
+| `npm run start` | Production build'i çalıştırır |
+| `npm run lint` | ESLint kontrolü yapar |

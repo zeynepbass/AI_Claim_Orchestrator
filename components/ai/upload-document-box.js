@@ -1,19 +1,18 @@
 "use client";
 
 import { useState } from "react";
+import { FileCheck2, Upload } from "lucide-react";
 import { Input } from "@/components/ui/input";
-import { Upload, FileCheck2 } from "lucide-react";
+import { buildUploadMessage } from "@/features/claim/utils/claim-helpers";
 
 export default function UploadDocumentBox() {
   const [message, setMessage] = useState("");
 
-  const handleFileChange = (e) => {
-    const file = e.target.files?.[0];
+  const handleFileChange = (event) => {
+    const file = event.target.files?.[0];
     if (!file) return;
 
-    setMessage(
-      `"${file.name}" uploaded successfully. AI Analyzer detected a readable document and marked it as suitable for submission.`
-    );
+    setMessage(buildUploadMessage(file.name));
   };
 
   return (
@@ -28,13 +27,19 @@ export default function UploadDocumentBox() {
             AI Document Analyzer
           </h3>
           <p className="mt-1 text-sm leading-6 text-slate-600">
-            Upload the requested occupational certificate and simulate instant AI-based validation.
+            Upload the requested occupational certificate and simulate instant
+            AI-based validation.
           </p>
         </div>
       </div>
 
       <div className="mt-4 rounded-2xl border border-dashed border-slate-300 bg-slate-50 p-4">
-        <Input type="file" onChange={handleFileChange} className="bg-white" />
+        <Input
+          type="file"
+          accept=".pdf,.jpg,.jpeg,.png"
+          onChange={handleFileChange}
+          className="bg-white"
+        />
         <p className="mt-3 text-xs text-slate-500">
           Supported for demo: PDF, JPG, PNG
         </p>

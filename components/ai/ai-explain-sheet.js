@@ -1,5 +1,6 @@
 "use client";
 
+import { TriangleAlert } from "lucide-react";
 import {
   Sheet,
   SheetContent,
@@ -8,15 +9,12 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import { useClaimStore } from "@/features/claim/store/claim-store";
-import {TriangleAlert } from "lucide-react";
+import { generateAiExplanation } from "@/features/claim/utils/claim-helpers";
 
 export default function AiExplainSheet() {
-  const {
-    selectedNode,
-    aiExplanation,
-    isAiSheetOpen,
-    setIsAiSheetOpen,
-  } = useClaimStore();
+  const selectedNode = useClaimStore((state) => state.selectedNode);
+  const isAiSheetOpen = useClaimStore((state) => state.isAiSheetOpen);
+  const setIsAiSheetOpen = useClaimStore((state) => state.setIsAiSheetOpen);
 
   return (
     <Sheet open={isAiSheetOpen} onOpenChange={setIsAiSheetOpen}>
@@ -32,9 +30,11 @@ export default function AiExplainSheet() {
           </SheetDescription>
         </SheetHeader>
 
-        <div className="mt-6 space-y-4 m-2">
+        <div className="m-2 mt-6 space-y-4">
           <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
-            <p className="text-sm leading-7 text-slate-700">{aiExplanation}</p>
+            <p className="text-sm leading-7 text-slate-700">
+              {generateAiExplanation(selectedNode)}
+            </p>
           </div>
 
           {selectedNode?.actionRequired && (

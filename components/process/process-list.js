@@ -5,7 +5,7 @@ export default function ProcessList({ items = [] }) {
     <div className="space-y-4">
       {items.map((item, index) => (
         <ProcessNodeRenderer
-          key={`${item.title}-${index}`}
+          key={item.title}
           item={item}
           index={index}
           isLast={index === items.length - 1}
